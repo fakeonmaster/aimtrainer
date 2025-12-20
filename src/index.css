@@ -1,0 +1,288 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+/* Tactical/Cyber Design System for FPS Aim Trainer */
+
+@layer base {
+  :root {
+    /* Core backgrounds - dark tactical theme */
+    --background: 220 20% 6%;
+    --foreground: 180 100% 95%;
+
+    --card: 220 20% 10%;
+    --card-foreground: 180 100% 95%;
+
+    --popover: 220 20% 8%;
+    --popover-foreground: 180 100% 95%;
+
+    /* Primary - Neon Cyan */
+    --primary: 185 100% 50%;
+    --primary-foreground: 220 20% 6%;
+    --primary-glow: 185 100% 60%;
+
+    /* Secondary - Darker variant */
+    --secondary: 220 25% 15%;
+    --secondary-foreground: 180 100% 90%;
+
+    /* Muted elements */
+    --muted: 220 20% 18%;
+    --muted-foreground: 220 15% 55%;
+
+    /* Accent - Electric orange for hits */
+    --accent: 25 100% 55%;
+    --accent-foreground: 220 20% 6%;
+
+    /* Destructive - Red for misses/warnings */
+    --destructive: 0 85% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Target colors */
+    --target: 0 85% 55%;
+    --target-head: 45 100% 55%;
+    --target-glow: 0 85% 65%;
+
+    /* Success - Green for hits */
+    --success: 145 80% 45%;
+    --success-foreground: 220 20% 6%;
+
+    --border: 220 25% 20%;
+    --input: 220 25% 15%;
+    --ring: 185 100% 50%;
+
+    --radius: 0.25rem;
+
+    /* Sidebar (if needed) */
+    --sidebar-background: 220 20% 8%;
+    --sidebar-foreground: 180 100% 95%;
+    --sidebar-primary: 185 100% 50%;
+    --sidebar-primary-foreground: 220 20% 6%;
+    --sidebar-accent: 220 25% 15%;
+    --sidebar-accent-foreground: 180 100% 90%;
+    --sidebar-border: 220 25% 20%;
+    --sidebar-ring: 185 100% 50%;
+  }
+
+  .dark {
+    /* Same as root - this is a dark-only theme */
+    --background: 220 20% 6%;
+    --foreground: 180 100% 95%;
+    --card: 220 20% 10%;
+    --card-foreground: 180 100% 95%;
+    --popover: 220 20% 8%;
+    --popover-foreground: 180 100% 95%;
+    --primary: 185 100% 50%;
+    --primary-foreground: 220 20% 6%;
+    --secondary: 220 25% 15%;
+    --secondary-foreground: 180 100% 90%;
+    --muted: 220 20% 18%;
+    --muted-foreground: 220 15% 55%;
+    --accent: 25 100% 55%;
+    --accent-foreground: 220 20% 6%;
+    --destructive: 0 85% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 25% 20%;
+    --input: 220 25% 15%;
+    --ring: 185 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-mono;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Orbitron', sans-serif;
+  }
+}
+
+@layer components {
+  /* Crosshair styles */
+  .crosshair {
+    @apply fixed pointer-events-none z-50;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .crosshair-line {
+    @apply absolute bg-primary;
+    box-shadow: 0 0 8px hsl(var(--primary));
+  }
+
+  .crosshair-dot {
+    @apply absolute w-1 h-1 rounded-full bg-primary;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 6px hsl(var(--primary));
+  }
+
+  /* Hit marker animation */
+  .hit-marker {
+    @apply fixed pointer-events-none z-50;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: hit-marker-flash 0.15s ease-out forwards;
+  }
+
+  @keyframes hit-marker-flash {
+    0% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(1.5);
+    }
+  }
+
+  /* Headshot marker */
+  .headshot-marker {
+    animation: headshot-flash 0.2s ease-out forwards;
+  }
+
+  @keyframes headshot-flash {
+    0% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      filter: brightness(1);
+    }
+    50% {
+      filter: brightness(2);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(2);
+      filter: brightness(1);
+    }
+  }
+
+  /* Recoil animation */
+  .recoil {
+    animation: recoil-shake 0.08s ease-out;
+  }
+
+  @keyframes recoil-shake {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+    100% { transform: translateY(0); }
+  }
+
+  /* Glow effects */
+  .glow-primary {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.5), 
+                0 0 40px hsl(var(--primary) / 0.3),
+                inset 0 0 20px hsl(var(--primary) / 0.1);
+  }
+
+  .glow-accent {
+    box-shadow: 0 0 20px hsl(var(--accent) / 0.5), 
+                0 0 40px hsl(var(--accent) / 0.3);
+  }
+
+  .glow-success {
+    box-shadow: 0 0 20px hsl(var(--success) / 0.5), 
+                0 0 40px hsl(var(--success) / 0.3);
+  }
+
+  /* Text glow */
+  .text-glow-primary {
+    text-shadow: 0 0 10px hsl(var(--primary)),
+                 0 0 20px hsl(var(--primary) / 0.5),
+                 0 0 30px hsl(var(--primary) / 0.3);
+  }
+
+  .text-glow-accent {
+    text-shadow: 0 0 10px hsl(var(--accent)),
+                 0 0 20px hsl(var(--accent) / 0.5);
+  }
+
+  /* HUD panel */
+  .hud-panel {
+    @apply bg-card/80 backdrop-blur-sm border border-border/50 rounded;
+    box-shadow: 0 0 20px hsl(var(--background) / 0.8),
+                inset 0 1px 0 hsl(var(--primary) / 0.1);
+  }
+
+  /* Stat display */
+  .stat-value {
+    @apply text-2xl font-bold text-primary;
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  .stat-label {
+    @apply text-xs uppercase tracking-widest text-muted-foreground;
+  }
+
+  /* Scanline effect */
+  .scanlines::before {
+    content: '';
+    @apply absolute inset-0 pointer-events-none z-10;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      hsl(var(--background) / 0.03) 2px,
+      hsl(var(--background) / 0.03) 4px
+    );
+  }
+
+  /* Slider styling */
+  .slider-tactical {
+    @apply h-2 bg-muted rounded-full;
+  }
+
+  .slider-tactical::-webkit-slider-thumb {
+    @apply appearance-none w-4 h-4 rounded-full bg-primary cursor-pointer;
+    box-shadow: 0 0 10px hsl(var(--primary));
+  }
+
+  /* Button variants for game UI */
+  .btn-tactical {
+    @apply px-6 py-3 bg-secondary border border-primary/30 text-primary font-semibold uppercase tracking-wider;
+    @apply transition-all duration-200;
+    @apply hover:bg-primary hover:text-primary-foreground hover:shadow-lg;
+    font-family: 'Orbitron', sans-serif;
+    box-shadow: 0 0 10px hsl(var(--primary) / 0.2);
+  }
+
+  .btn-tactical:hover {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.5),
+                0 0 40px hsl(var(--primary) / 0.3);
+  }
+
+  .btn-tactical-accent {
+    @apply px-6 py-3 bg-accent/20 border border-accent/50 text-accent font-semibold uppercase tracking-wider;
+    @apply transition-all duration-200;
+    @apply hover:bg-accent hover:text-accent-foreground;
+    font-family: 'Orbitron', sans-serif;
+  }
+}
+
+@layer utilities {
+  /* Utility for hiding cursor in game */
+  .cursor-none {
+    cursor: none;
+  }
+
+  /* Full screen game container */
+  .game-container {
+    @apply w-screen h-screen overflow-hidden bg-background;
+  }
+
+  /* Prevent text selection during gameplay */
+  .no-select {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+}
