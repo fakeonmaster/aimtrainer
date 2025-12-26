@@ -8,13 +8,15 @@ interface FirstPersonControlsProps {
   isPlaying: boolean;
   isPaused: boolean;
   onShoot: (raycaster: THREE.Raycaster) => void;
+  onPositionChange?: (position: THREE.Vector3) => void;
 }
 
 export function FirstPersonControls({ 
   sensitivity, 
   isPlaying, 
   isPaused,
-  onShoot 
+  onShoot,
+  onPositionChange
 }: FirstPersonControlsProps) {
   const { camera, gl } = useThree();
   const isLockedRef = useRef(false);
@@ -128,13 +130,6 @@ export function FirstPersonControls({
     const handleMouseDown = (event: MouseEvent) => {
       if (!isLockedRef.current || !isPlaying || isPaused) return;
       if (event.button !== 0) return; // Left click only
-      if (!canShootRef.current) return;
-
-      // Prevent rapid fire
-      canShootRef.current = false;
-      setTimeout(() => {
-        canShootRef.current = true;
-      }, 100);
 
       // Create raycaster from camera center
       const raycaster = new THREE.Raycaster();
@@ -200,9 +195,14 @@ export function FirstPersonControls({
     camera.position.add(velocityRef.current.clone().multiplyScalar(delta));
 
     // Keep within bounds
-    camera.position.x = Math.max(-15, Math.min(15, camera.position.x));
-    camera.position.z = Math.max(-5, Math.min(5, camera.position.z));
+    camera.position.x = Math.max(-20, Math.min(20, camera.position.x));
+    camera.position.z = Math.max(-20, Math.min(20, camera.position.z));
     camera.position.y = 1.7; // Eye height
+
+    // Update player position for AI
+    if (onPositionChange) {
+      onPositionChange(camera.position.clone());
+    }
   });
 
   // Reset camera on game start

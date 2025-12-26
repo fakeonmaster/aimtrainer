@@ -1,11 +1,14 @@
 // Game state management hook
 import { useState, useCallback, useRef } from 'react';
 
+export type DifficultyLevel = 'easy' | 'normal' | 'hard' | 'immortal';
+
 export interface GameSettings {
   sensitivity: number;
   targetSpeed: number;
   targetSize: number;
   sessionDuration: number;
+  difficulty: DifficultyLevel;
 }
 
 export interface GameState {
@@ -25,6 +28,7 @@ const DEFAULT_SETTINGS: GameSettings = {
   targetSpeed: 3,
   targetSize: 1,
   sessionDuration: 30,
+  difficulty: 'normal',
 };
 
 const INITIAL_STATE: GameState = {

@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 import { MeshStandardMaterial } from 'three';
 import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
@@ -20,25 +21,25 @@ export function Arena() {
   return (
     <>
       {/* Floor */}
-      <mesh ref={floorRef} receiveShadow position={[0, 0, 0]}>
+      <mesh ref={floorRef} receiveShadow position={[0, 0, 0]} userData={{ type: 'arena' }}>
         <boxGeometry args={[arenaSize, 0.1, arenaSize]} />
         <meshStandardMaterial {...floorMaterial} />
       </mesh>
 
       {/* Walls */}
-      <mesh position={[0, wallHeight / 2, -arenaSize / 2]} receiveShadow castShadow>
+      <mesh position={[0, wallHeight / 2, -arenaSize / 2]} receiveShadow castShadow userData={{ type: 'arena' }}>
         <boxGeometry args={[arenaSize, wallHeight, 0.2]} />
         <meshStandardMaterial {...wallMaterial} />
       </mesh>
-      <mesh position={[0, wallHeight / 2, arenaSize / 2]} receiveShadow castShadow>
+      <mesh position={[0, wallHeight / 2, arenaSize / 2]} receiveShadow castShadow userData={{ type: 'arena' }}>
         <boxGeometry args={[arenaSize, wallHeight, 0.2]} />
         <meshStandardMaterial {...wallMaterial} />
       </mesh>
-      <mesh position={[-arenaSize / 2, wallHeight / 2, 0]} receiveShadow castShadow>
+      <mesh position={[-arenaSize / 2, wallHeight / 2, 0]} receiveShadow castShadow userData={{ type: 'arena' }}>
         <boxGeometry args={[0.2, wallHeight, arenaSize]} />
         <meshStandardMaterial {...wallMaterial} />
       </mesh>
-      <mesh position={[arenaSize / 2, wallHeight / 2, 0]} receiveShadow castShadow>
+      <mesh position={[arenaSize / 2, wallHeight / 2, 0]} receiveShadow castShadow userData={{ type: 'arena' }}>
         <boxGeometry args={[0.2, wallHeight, arenaSize]} />
         <meshStandardMaterial {...wallMaterial} />
       </mesh>
