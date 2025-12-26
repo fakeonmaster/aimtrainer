@@ -1,8 +1,12 @@
 {
-  "name": "vite_react_shadcn_ts",
-  "private": true,
-  "version": "0.0.0",
+  "name": "your-project-name",
+  "version": "1.0.0",
   "type": "module",
+  "overrides": {
+    "@react-three/drei": {
+      "three-mesh-bvh": "0.8.0"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
